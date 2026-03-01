@@ -1,5 +1,13 @@
+const http = require('http'); // Tambahan buat pinger
 const { connectWhatsApp, setMessageHandler } = require('./connection/whatsapp');
 const handleCommand = require('./handlers/commandHandler');
+
+// --- SERVER PINGER (Wajib buat Hugging Face) ---
+http.createServer((req, res) => {
+    res.write('Bot ifaRXbot is Online');
+    res.end();
+}).listen(7860);
+console.log('✅ Pinger aktif di port 7860');
 
 console.log('\nBOT STICKER AKTIF\n');
 
