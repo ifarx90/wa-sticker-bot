@@ -5,10 +5,14 @@ const sticker = require("../commands/sticker");
 const me = require("../commands/me");
 const help = require("../commands/help");
 const randomDelay = require("../utils/delay");
+const toimg = require("../commands/toimg");
+const quotes = require("../commands/quotes");
+const qb = require("../commands/qb");
+const storage = require("../utils/storage");
 
 // ===== MEMORI UNTUK USER BARU =====
-const welcomedUsers = new Set(); // Catatan user yang sudah dapat sambutan
-const notifiedUsers = new Set(); // Catatan user yang sudah dapat notifikasi .s
+let welcomedUsers = storage.loadWelcomed();
+const notifiedUsers = new Set(); // (tetap memory dulu)
 const processedMessages = new Set(); // Anti double reply
 
 // ===== DAFTAR COMMAND =====
@@ -16,20 +20,23 @@ const commands = new Map();
 commands.set(ping.name, ping);
 commands.set(kal.name, kal);
 commands.set(sticker.name, sticker);
-commands.set("stiker", sticker); // ALIAS: .stiker (sama dengan .s)
+commands.set("stiker", sticker);
 commands.set(me.name, me);
 commands.set(help.name, help);
-commands.set("help", help); // ALIAS: .menu
+commands.set("help", help);
+commands.set(toimg.name, toimg);
+commands.set(quotes.name, quotes);
+commands.set(qb.name, qb);
 
 async function handleCommand(sock, message) {
   try {
-    // Skip kalo pesan kosong atau dari bot sendiri
     if (!message.message || message.key.fromMe) return;
 
-    const from = message.key.remoteJid; // Nomor pengirim
+    const from = message.key.remoteJid;
 
     // ===== ANTI DOUBLE REPLY =====
     const messageId = message.key.id;
+
     if (processedMessages.has(messageId)) return;
     processedMessages.add(messageId);
 
@@ -49,6 +56,7 @@ async function handleCommand(sock, message) {
       messageType = "teks";
     } else if (message.message.imageMessage) {
       messageType = "gambar";
+
       if (message.message.imageMessage.caption) {
         text = message.message.imageMessage.caption;
       }
@@ -60,20 +68,19 @@ async function handleCommand(sock, message) {
       messageType = "media lain";
     }
 
-    // ===== CEK APAKAH INI COMMAND =====
+    // ===== CEK COMMAND =====
     const isCommand = text.startsWith(config.prefix);
 
-    // ===== CEK USER BARU (PERTAMA KALI CHAT) =====
     const isNewUser = !welcomedUsers.has(from);
 
-    // ===== KALO USER BARU DAN BUKAN COMMAND =====
+    // ===== USER BARU =====
     if (isNewUser && !isCommand) {
-      welcomedUsers.add(from); // Tandai user sudah dikasih sambutan
+      welcomedUsers.add(from);
+      storage.saveWelcomed(welcomedUsers);
 
-      // Kirim pesan sambutan
       await sock.sendMessage(from, {
         text: `╔════════════════════╗
-║  👋 SELAMAT DATANG  ║
+║   👋 SELAMAT DATANG  ║
 ╚════════════════════╝
 
 💡 Ketik .menu untuk bantuan lengkap
@@ -81,7 +88,7 @@ async function handleCommand(sock, message) {
 📌 PERINTAH DASAR:
 🔹 .kal – Stiker teks
 🔹 .s   – Stiker gambar
-🔹 .me  – Info profil
+🔹 .me   – Info profil
 
 💬 CONTOH:
 * .kal Jangan lupa bahagia
@@ -106,14 +113,14 @@ Contoh:
 .kal jangan lupa bahagia brok
 .s (reply foto)`,
       });
+
       console.log(`📢 Pemberitahuan untuk user: ${from} (${messageType})`);
       return;
     }
 
-    // ===== INI COMMAND, LANJUTKAN PARSING =====
+    // ===== PARSING COMMAND =====
     const fullText = text.slice(config.prefix.length);
 
-    // ===== CEK SPASI SETELAH PREFIX =====
     if (fullText.startsWith(" ")) {
       await sock.sendMessage(from, {
         text: `❌ Jangan pake spasi setelah titik!
@@ -125,6 +132,7 @@ Contoh yang bener:
 
 Ketik .menu untuk bantuan lengkap.`,
       });
+
       console.log(`❌ Command salah: ada spasi setelah prefix dari ${from}`);
       return;
     }
@@ -133,25 +141,28 @@ Ketik .menu untuk bantuan lengkap.`,
     const commandName = parts.shift().toLowerCase();
     const args = parts;
 
-    // ===== CEK CUMA TITIK DOANG =====
+    // ===== CEK TITIK DOANG =====
     if (!commandName) {
       await sock.sendMessage(from, {
         text: `❌ Cuma titik doang?
 
 ketik .menu untuk lihat daftar perintah yang tersedia.`,
       });
-      console.log(`❌ Command kosong (cuma titik doang) dari ${from}`);
+
+      console.log(`❌ Command kosong dari ${from}`);
       return;
     }
 
     // ===== CARI COMMAND =====
     const command = commands.get(commandName);
+
     if (!command) {
       await sock.sendMessage(from, {
         text: `❌ Command "${commandName}" tidak dikenal
 
 Ketik .menu untuk melihat daftar perintah yang tersedia.`,
       });
+
       console.log(`❌ Command "${commandName}" tidak dikenal dari ${from}`);
       return;
     }
@@ -161,10 +172,8 @@ Ketik .menu untuk melihat daftar perintah yang tersedia.`,
     console.log(`\n👉 Command: ${commandName}`);
     console.log(`Dari: ${from}`);
 
-    // Delay random biar ga terlalu instan
     await randomDelay();
 
-    // ===== EKSEKUSI COMMAND =====
     await command.execute(sock, message, args);
   } catch (error) {
     console.log("❌ Error:", error.message);

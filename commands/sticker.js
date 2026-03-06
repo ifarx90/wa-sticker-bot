@@ -1,9 +1,10 @@
 const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const { imageToSticker } = require('../utils/imageToSticker');
 const { addTextToImage } = require('../utils/addTextToImage');
+const storage = require("../utils/storage");
 
 // Simpan user yang udah dikasih catatan
-const notifiedUsers = new Set();
+let notifiedUsers = storage.loadNotified();
 const MAX_FILE_SIZE = 7 * 1024 * 1024; // 7MB
 
 async function execute(sock, message, args) {
@@ -76,6 +77,7 @@ async function execute(sock, message, args) {
                 text: '📸 Catatan: Gambar asli akan tersimpan di galeri. Disarankan matikan auto download biar ga double.' 
             });
             notifiedUsers.add(from);
+            storage.saveNotified(notifiedUsers);
         }
         
         // Download media

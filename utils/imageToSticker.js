@@ -5,18 +5,26 @@ async function imageToSticker(imageBuffer, packname = "ifar🤖bot", author = "B
   try {
     console.log("📥 Memulai konversi gambar ke stiker...");
 
+    console.log("🛠 Normalisasi gambar...");
+
+    const normalized = await sharp(imageBuffer)
+      .png()
+      .toBuffer();
+
     console.log("🛠 Resize & Convert to WEBP (buffer mode)...");
 
-    const webpBuffer = await sharp(imageBuffer)
+    const webpBuffer = await sharp(normalized)
       .resize(512, 512, {
         fit: "contain",
         background: { r: 0, g: 0, b: 0, alpha: 0 },
+        position: "center"
       })
       .webp({
         lossless: true,
         quality: 100,
         alphaQuality: 100,
         effort: 6,
+        smartSubsample: true
       })
       .toBuffer();
 
@@ -28,6 +36,7 @@ async function imageToSticker(imageBuffer, packname = "ifar🤖bot", author = "B
 
     console.log("🎉 Stiker berhasil dibuat!");
     return stickerBuffer;
+
   } catch (err) {
     console.log("❌ Sticker Convert Error:", err);
     return null;
