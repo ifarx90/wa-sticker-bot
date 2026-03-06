@@ -1,56 +1,54 @@
 const params = new URLSearchParams(window.location.search);
 
 const text = params.get("text");
-const timeParam = params.get("time");
+const time = params.get("time");
 
 const message = document.getElementById("message");
 const timeEl = document.getElementById("time");
 
 /* =====================
-RENDER TEXT + EMOJI
+EMOJI RENDER
 ===================== */
 
-function renderEmoji(inputText) {
+function renderEmoji(str) {
   if (typeof twemoji !== "undefined") {
-    return twemoji.parse(inputText, {
+    return twemoji.parse(str, {
       folder: "svg",
-      ext: ".svg",
+      ext: ".svg"
     });
   }
-  return inputText;
+  return str;
 }
 
 /* =====================
-TEXT RENDER
+TEXT
 ===================== */
 
 if (text) {
-  const decoded = decodeURIComponent(text);
-  message.innerHTML = renderEmoji(decoded);
+  const decodedText = decodeURIComponent(text);
+  message.innerHTML = renderEmoji(decodedText);
 } else {
-  message.innerText = "(teks isi sendiri)";
+  message.innerText = "(no text)";
 }
 
 /* =====================
-TIME LOGIC (WA STYLE)
+TIME (AMBIL DARI BOT)
 ===================== */
 
-function getCurrentTime() {
+if (time) {
+
+  const decodedTime = decodeURIComponent(time);
+  timeEl.innerText = decodedTime;
+
+} else {
+
+  // fallback kalau tidak ada time
   const now = new Date();
 
-  // pakai timezone user (bukan server)
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
+  let h = now.getHours();
+  let m = now.getMinutes();
 
-  minutes = minutes < 10 ? "0" + minutes : minutes;
+  if (m < 10) m = "0" + m;
 
-  return hours + ":" + minutes;
-}
-
-if (timeParam) {
-  // kalau waktu dikirim dari bot (.q)
-  timeEl.innerText = decodeURIComponent(timeParam);
-} else {
-  // fallback
-  timeEl.innerText = getCurrentTime();
+  timeEl.innerText = h + ":" + m;
 }
