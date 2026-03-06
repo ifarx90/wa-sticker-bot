@@ -1,6 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 
-// ambil parameter text atau q
+// ambil parameter
 const text = params.get("text") || params.get("q");
 
 const message = document.getElementById("message");
@@ -24,12 +24,16 @@ if (text) {
 }
 
 // ========================
-// TIME
+// TIME (style WhatsApp)
 // ========================
 
 const now = new Date();
 
-let h = now.getHours().toString().padStart(2, "0");
-let m = now.getMinutes().toString().padStart(2, "0");
+let h = now.getHours();      // tanpa 0 di depan
+let m = now.getMinutes();
+
+if (m < 10) {
+  m = "0" + m;               // menit tetap 2 digit
+}
 
 document.getElementById("time").textContent = h + ":" + m;
