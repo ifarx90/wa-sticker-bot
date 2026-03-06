@@ -295,6 +295,7 @@ async function createTextSticker(text) {
         fit: "contain",
         background: { r: 255, g: 255, b: 255, alpha: 1 }
       })
+      .blur(1)
       .webp({
         quality: 60,
         effort: 6
