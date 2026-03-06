@@ -1,6 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 
-const text = params.get("text");
+// ambil parameter text atau q
+const text = params.get("text") || params.get("q");
 
 const message = document.getElementById("message");
 
@@ -16,9 +17,10 @@ function renderEmoji(text) {
 }
 
 if (text) {
-  message.innerHTML = renderEmoji(text);
+  const decodedText = decodeURIComponent(text);
+  message.innerHTML = renderEmoji(decodedText);
 } else {
-  message.innerText = "(teks isi sendiri)";
+  message.textContent = "(teks isi sendiri)";
 }
 
 // ========================
@@ -27,11 +29,7 @@ if (text) {
 
 const now = new Date();
 
-let h = now.getHours();
-let m = now.getMinutes();
+let h = now.getHours().toString().padStart(2, "0");
+let m = now.getMinutes().toString().padStart(2, "0");
 
-if (m < 10) {
-  m = "0" + m;
-}
-
-document.getElementById("time").innerText = h + ":" + m;
+document.getElementById("time").textContent = h + ":" + m;
