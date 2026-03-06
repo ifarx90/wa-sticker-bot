@@ -6,13 +6,13 @@ const { addMetadata } = require("./addMetadata");
 const { isEmoji, getEmojiImage } = require("./emojiCache");
 
 // Setup font
-const fontPath = path.join(__dirname, "../assets/fonts/helvetica.ttf");
-let fontFamily = "sans-serif";
+const fontPath = path.join(__dirname, "../assets/fonts/BebasNeue.ttf");
+let fontFamily = "BebasNeue.ttf";
 
 if (fs.existsSync(fontPath)) {
   try {
-    registerFont(fontPath, { family: "Helvetica" });
-    fontFamily = "Helvetica";
+    registerFont(fontPath, { family: "BebasNeue.ttf" });
+    fontFamily = "BebasNeue.ttf";
   } catch (error) {}
 }
 
