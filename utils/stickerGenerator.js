@@ -46,9 +46,33 @@ async function drawLineWithEmoji(ctx, line, x, y, fontSize) {
   }
 }
 
+// 🔥 WRAP UNTUK 1 KATA PANJANG
+function wrapLongWord(ctx, word, maxWidth) {
+  const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+  const segments = [...segmenter.segment(word)].map((s) => s.segment);
+
+  let lines = [];
+  let current = "";
+
+  for (const char of segments) {
+    const test = current + char;
+    const width = ctx.measureText(test).width;
+
+    if (width > maxWidth && current.length > 0) {
+      lines.push(current);
+      current = char;
+    } else {
+      current = test;
+    }
+  }
+
+  if (current) lines.push(current);
+
+  return lines;
+}
+
 async function createTextSticker(text) {
   try {
-
     const width = 1024;
     const baseHeight = 1024;
     const defaultPadding = 30;
@@ -74,19 +98,18 @@ async function createTextSticker(text) {
     // ===============================
 
     if (wordCount === 1 && !text.includes(" ")) {
-
       const raw = words[0];
-      const textAreaWidth = width - (defaultPadding * 2);
+      const textAreaWidth = width - defaultPadding * 2;
       const maxHeight = baseHeight * 0.9;
 
       while (fontSize > 20) {
-
         ctx.font = `normal ${fontSize}px ${fontFamily}`;
 
-        const singleWidth = ctx.measureText(raw).width;
-        const singleHeight = fontSize * 1.2;
+        const wrapped = wrapLongWord(ctx, raw, textAreaWidth);
+        const totalHeight = wrapped.length * fontSize * 1.2;
 
-        if (singleWidth <= textAreaWidth && singleHeight <= maxHeight) {
+        if (totalHeight <= maxHeight) {
+          lines = wrapped;
           break;
         }
 
@@ -99,23 +122,24 @@ async function createTextSticker(text) {
       const ascent = metrics.actualBoundingBoxAscent;
 
       const startY = ascent + 40;
+      const lineHeight = fontSize * 1.2;
 
-      await drawLineWithEmoji(ctx, raw, defaultPadding, startY, fontSize);
-
+      for (let i = 0; i < lines.length; i++) {
+        const y = startY + i * lineHeight;
+        await drawLineWithEmoji(ctx, lines[i], defaultPadding, y, fontSize);
+      }
     } else if (wordCount <= 4) {
-
       // ===============================
       // ===== ≤ 4 KATA ===============
       // ===============================
 
       lines = words;
-      const textAreaWidth = width - (defaultPadding * 2);
+      const textAreaWidth = width - defaultPadding * 2;
 
       let iterasi = 0;
       const maxIterasi = 20;
 
       do {
-
         ctx.font = `normal ${fontSize}px ${fontFamily}`;
 
         let maxWidth = 0;
@@ -132,7 +156,6 @@ async function createTextSticker(text) {
 
         fontSize -= 5;
         iterasi++;
-
       } while (fontSize > 20 && iterasi < maxIterasi);
 
       ctx.font = `normal ${fontSize}px ${fontFamily}`;
@@ -147,9 +170,7 @@ async function createTextSticker(text) {
         const y = startY + i * lineHeight;
         await drawLineWithEmoji(ctx, lines[i], defaultPadding, y, fontSize);
       }
-
     } else {
-
       // ===============================
       // ===== > 4 KATA (FINAL FIX) ===
       // ===============================
@@ -162,15 +183,14 @@ async function createTextSticker(text) {
         }
       }
 
-      const outerPadding = 20; // 🔥 Sama semua sisi
-      const textAreaWidth = width - (outerPadding * 2);
+      const outerPadding = 20;
+      const textAreaWidth = width - outerPadding * 2;
 
       fontSize = 400;
 
       let resizeNeeded = true;
 
       while (resizeNeeded && fontSize > 20) {
-
         ctx.font = `normal ${fontSize}px ${fontFamily}`;
 
         let maxWidth = 0;
@@ -190,12 +210,11 @@ async function createTextSticker(text) {
 
       const metrics = ctx.measureText("M");
       const ascent = metrics.actualBoundingBoxAscent;
-      const descent = metrics.actualBoundingBoxDescent;
 
       const lineHeight = fontSize * 1.05;
       const totalHeight = lineHeight * lines.length;
 
-      const dynamicHeight = totalHeight + (outerPadding * 2);
+      const dynamicHeight = totalHeight + outerPadding * 2;
 
       canvas.height = dynamicHeight;
 
@@ -208,54 +227,32 @@ async function createTextSticker(text) {
       const startY = outerPadding + ascent;
 
       for (let index = 0; index < lines.length; index++) {
-
         const line = lines[index];
         const y = startY + index * lineHeight;
 
         const wordsInLine = line.split(" ");
 
         if (wordsInLine.length >= 2 && index !== lines.length - 1) {
-
           let totalWordsWidth = 0;
-          wordsInLine.forEach(w => {
+          wordsInLine.forEach((w) => {
             totalWordsWidth += ctx.measureText(w).width;
           });
 
-          const totalSpacing =
-            textAreaWidth - totalWordsWidth;
+          const totalSpacing = textAreaWidth - totalWordsWidth;
 
-          const spaceBetween =
-            totalSpacing / (wordsInLine.length - 1);
+          const spaceBetween = totalSpacing / (wordsInLine.length - 1);
 
           let offsetX = outerPadding;
 
           for (let i = 0; i < wordsInLine.length; i++) {
-
-            await drawLineWithEmoji(
-              ctx,
-              wordsInLine[i],
-              offsetX,
-              y,
-              fontSize
-            );
+            await drawLineWithEmoji(ctx, wordsInLine[i], offsetX, y, fontSize);
 
             if (i !== wordsInLine.length - 1) {
-              offsetX +=
-                ctx.measureText(wordsInLine[i]).width +
-                spaceBetween;
+              offsetX += ctx.measureText(wordsInLine[i]).width + spaceBetween;
             }
           }
-
         } else {
-
-          await drawLineWithEmoji(
-            ctx,
-            line,
-            outerPadding,
-            y,
-            fontSize
-          );
-
+          await drawLineWithEmoji(ctx, line, outerPadding, y, fontSize);
         }
       }
     }
@@ -279,7 +276,6 @@ async function createTextSticker(text) {
     const stickerBuffer = await addMetadata(webpBuffer);
 
     return stickerBuffer;
-
   } catch (error) {
     console.log("Error:", error.message);
     throw error;
