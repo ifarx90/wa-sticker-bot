@@ -1,75 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
+    <meta charset="UTF-8" />
 
-<meta charset="UTF-8">
+    <!-- FONT EMOJI -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet" />
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</head>
+  <body>
+    <div class="wa-screen">
+      <!-- reaction -->
+      <div class="reaction-bar">👍 ❤️ 😂 😮 😢 🙏 <span class="plus">+</span></div>
 
-<body>
+      <!-- chat bubble -->
+      <div class="chat-row">
+        <div class="bubble">
+          <span id="message"></span>
 
-<div class="wa-screen">
-
-  <!-- reaction -->
-  <div class="reaction-bar">
-    👍 ❤️ 😂 😮 😢 🙏 <span class="plus">+</span>
-  </div>
-
-  <!-- chat bubble -->
-  <div class="chat-row">
-
-    <div class="bubble">
-
-      <span id="message"></span>
-
-      <div class="meta">
-        <span id="time"></span>
+          <div class="meta">
+            <span id="time"></span>
+          </div>
+        </div>
       </div>
 
+      <!-- context menu -->
+      <div class="menu">
+        <div class="menu-item">
+          <span>Balas</span>
+          <img src="../../assets/icons/reply.svg" />
+        </div>
+
+        <div class="menu-item">
+          <span>Teruskan</span>
+          <img src="../../assets/icons/forward.svg" />
+        </div>
+
+        <div class="menu-item">
+          <span>Salin</span>
+          <img src="../../assets/icons/copy.svg" />
+        </div>
+
+        <div class="menu-item">
+          <span>Beri Bintang</span>
+          <img src="../../assets/icons/star.svg" />
+        </div>
+
+        <div class="menu-item">
+          <span>Laporkan</span>
+          <img src="../../assets/icons/report.svg" />
+        </div>
+
+        <div class="menu-item delete">
+          <span>hapus</span>
+          <img src="../../assets/icons/delete.svg" />
+        </div>
+      </div>
     </div>
 
-  </div>
-
-  <!-- context menu -->
-  <div class="menu">
-
-    <div class="menu-item">
-      <span>Balas</span>
-      <img src="../../assets/icons/reply.svg">
-    </div>
-
-    <div class="menu-item">
-      <span>Teruskan</span>
-      <img src="../../assets/icons/forward.svg">
-    </div>
-
-    <div class="menu-item">
-      <span>Salin</span>
-      <img src="../../assets/icons/copy.svg">
-    </div>
-
-    <div class="menu-item">
-      <span>Beri Bintang</span>
-      <img src="../../assets/icons/star.svg">
-    </div>
-
-    <div class="menu-item">
-      <span>Laporkan</span>
-      <img src="../../assets/icons/report.svg">
-    </div>
-
-    <div class="menu-item delete">
-      <span>hapus</span>
-      <img src="../../assets/icons/delete.svg">
-    </div>
-
-  </div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

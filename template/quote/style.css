@@ -3,6 +3,9 @@
   margin: 0;
   padding: 0;
   font-family:
+    "Noto Color Emoji",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
     system-ui,
     -apple-system,
     Segoe UI,
@@ -93,8 +96,6 @@ REACTION BAR
 
   transform: translateY(6px);
 }
-
-/* plus button */
 
 .plus {
   width: 26px;
@@ -210,8 +211,6 @@ MENU
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
 }
 
-/* menu item */
-
 .menu-item {
   display: flex;
 
@@ -225,8 +224,6 @@ MENU
   font-size: 15px;
 }
 
-/* ICON NORMAL */
-
 .menu-item img {
   width: 22px;
 
@@ -236,8 +233,6 @@ MENU
 
   opacity: 1;
 }
-
-/* DELETE ICON */
 
 .menu-item.delete img {
   width: 22px;
