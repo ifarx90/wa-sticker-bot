@@ -1,12 +1,14 @@
 const params = new URLSearchParams(window.location.search);
 
 const text = params.get("text");
+const timeParam = params.get("time");
 
 const message = document.getElementById("message");
+const timeEl = document.getElementById("time");
 
-// ========================
-// RENDER TEXT + EMOJI
-// ========================
+/* =====================
+RENDER TEXT + EMOJI
+===================== */
 
 function renderEmoji(text) {
   return twemoji.parse(text, {
@@ -21,17 +23,23 @@ if (text) {
   message.innerText = "(teks isi sendiri)";
 }
 
-// ========================
-// TIME
-// ========================
+/* =====================
+TIME LOGIC (WA STYLE)
+===================== */
 
-const now = new Date();
+if (timeParam) {
+  timeEl.innerText = timeParam;
+} else {
+  // fallback kalau tidak ada time
 
-let h = now.getHours();
-let m = now.getMinutes();
+  const now = new Date();
 
-if (m < 10) {
-  m = "0" + m;
+  let h = now.getHours();
+  let m = now.getMinutes();
+
+  if (m < 10) {
+    m = "0" + m;
+  }
+
+  timeEl.innerText = h + ":" + m;
 }
-
-document.getElementById("time").innerText = h + ":" + m;

@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
   font-family:
     "Noto Color Emoji",
     "Apple Color Emoji",
@@ -18,19 +19,21 @@
 body {
   width: 480px;
   height: 820px;
+
   overflow: hidden;
   position: relative;
 }
 
-/* =========================
-WALLPAPER BLUR
-========================= */
+/* WALLPAPER */
 
 body::before {
   content: "";
+
   position: absolute;
+
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
 
@@ -43,15 +46,16 @@ body::before {
   z-index: -2;
 }
 
-/* =========================
-OVERLAY
-========================= */
+/* OVERLAY */
 
 body::after {
   content: "";
+
   position: absolute;
+
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
 
@@ -60,9 +64,7 @@ body::after {
   z-index: -1;
 }
 
-/* =========================
-SCREEN
-========================= */
+/* SCREEN */
 
 .wa-screen {
   width: 100%;
@@ -72,9 +74,7 @@ SCREEN
   padding-left: 40px;
 }
 
-/* =========================
-REACTION BAR
-========================= */
+/* REACTION */
 
 .reaction-bar {
   display: inline-flex;
@@ -110,31 +110,23 @@ REACTION BAR
   border-radius: 50%;
 
   font-size: 18px;
-
-  margin-left: 2px;
-
-  opacity: 0.9;
 }
 
-/* =========================
-CHAT ROW
-========================= */
+/* CHAT */
 
 .chat-row {
   display: flex;
   align-items: flex-end;
 }
 
-/* =========================
-BUBBLE
-========================= */
+/* BUBBLE */
 
 .bubble {
   background: #202c33;
 
   color: white;
 
-  padding: 11px 15px;
+  padding: 11px 15px 22px 15px;
 
   border-radius: 14px;
 
@@ -149,13 +141,9 @@ BUBBLE
   word-wrap: break-word;
 
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-
-  display: inline-block;
 }
 
-/* =========================
-BUBBLE TAIL
-========================= */
+/* BUBBLE TAIL */
 
 .bubble::after {
   content: "";
@@ -175,20 +163,26 @@ BUBBLE TAIL
   border-bottom-left-radius: 2px;
 }
 
-/* =========================
-TIME (WHATSAPP STYLE)
-========================= */
+/* MESSAGE */
 
-.meta {
-  font-size: 11px;
-  color: #8696a0;
-  margin-left: 6px;
-  white-space: nowrap;
+#message {
+  display: block;
 }
 
-/* =========================
-MENU
-========================= */
+/* TIME (WA STYLE) */
+
+.time {
+  position: absolute;
+
+  right: 10px;
+  bottom: 6px;
+
+  font-size: 11px;
+
+  color: #8696a0;
+}
+
+/* MENU */
 
 .menu {
   margin-top: 28px;
@@ -203,6 +197,8 @@ MENU
 
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
 }
+
+/* MENU ITEM */
 
 .menu-item {
   display: flex;
@@ -219,18 +215,13 @@ MENU
 
 .menu-item img {
   width: 22px;
-
   height: 22px;
 
   filter: brightness(0) invert(1);
-
-  opacity: 1;
 }
 
+/* DELETE */
+
 .menu-item.delete img {
-  width: 22px;
-
-  height: 22px;
-
   filter: invert(37%) sepia(95%) saturate(6766%) hue-rotate(350deg) brightness(97%) contrast(120%);
 }

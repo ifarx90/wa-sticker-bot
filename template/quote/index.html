@@ -2,28 +2,46 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-
     <link rel="stylesheet" href="style.css" />
 
-    <!-- TWEMOJI -->
+    <!-- twemoji -->
     <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
   </head>
 
   <body>
     <div class="wa-screen">
-      <!-- reaction -->
-      <div class="reaction-bar">👍 ❤️ 😂 😮 😢 🙏 <span class="plus">+</span></div>
+      <!-- REACTION BAR -->
 
-      <!-- chat bubble -->
+      <div class="reaction-bar">
+        <span>👍</span>
+        <span>❤️</span>
+        <span>😂</span>
+        <span>😮</span>
+        <span>😢</span>
+        <span>🙏</span>
+
+        <div class="plus">+</div>
+      </div>
+
+      <!-- CHAT ROW -->
+
       <div class="chat-row">
         <div class="bubble">
           <span id="message"></span>
-          <span class="meta" id="time"></span>
+
+          <span id="time" class="time"></span>
         </div>
       </div>
 
-      <!-- context menu -->
+      <!-- MENU -->
+
       <div class="menu">
+        <div class="menu-item">
+          <span>Beri Bintang</span>
+          <img src="../../assets/icons/star.svg" />
+        </div>
+
         <div class="menu-item">
           <span>Balas</span>
           <img src="../../assets/icons/reply.svg" />
@@ -40,17 +58,12 @@
         </div>
 
         <div class="menu-item">
-          <span>Beri Bintang</span>
-          <img src="../../assets/icons/star.svg" />
-        </div>
-
-        <div class="menu-item">
           <span>Laporkan</span>
           <img src="../../assets/icons/report.svg" />
         </div>
 
         <div class="menu-item delete">
-          <span>hapus</span>
+          <span>Hapus</span>
           <img src="../../assets/icons/delete.svg" />
         </div>
       </div>
