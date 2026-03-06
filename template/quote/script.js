@@ -6,49 +6,33 @@ const time = params.get("time");
 const message = document.getElementById("message");
 const timeEl = document.getElementById("time");
 
-/* =====================
-EMOJI RENDER
-===================== */
+/* render emoji hanya untuk teks */
 
 function renderEmoji(str) {
   if (typeof twemoji !== "undefined") {
     return twemoji.parse(str, {
       folder: "svg",
-      ext: ".svg"
+      ext: ".svg",
     });
   }
+
   return str;
 }
 
-/* =====================
-TEXT
-===================== */
+/* text */
 
 if (text) {
   const decodedText = decodeURIComponent(text);
+
   message.innerHTML = renderEmoji(decodedText);
 } else {
   message.innerText = "(no text)";
 }
 
-/* =====================
-TIME (AMBIL DARI BOT)
-===================== */
+/* time */
 
 if (time) {
-
-  const decodedTime = decodeURIComponent(time);
-  timeEl.innerText = decodedTime;
-
+  timeEl.innerText = decodeURIComponent(time);
 } else {
-
-  // fallback kalau tidak ada time
-  const now = new Date();
-
-  let h = now.getHours();
-  let m = now.getMinutes();
-
-  if (m < 10) m = "0" + m;
-
-  timeEl.innerText = h + ":" + m;
+  timeEl.innerText = "";
 }

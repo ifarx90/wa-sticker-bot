@@ -1,20 +1,17 @@
 const puppeteer = require("puppeteer");
 const path = require("path");
 
-async function generateWATemplate(text, type = "quote") {
+async function generateWATemplate(text, time, type = "quote") {
   let browser;
 
   try {
-    console.log("🚀 Launch puppeteer...");
-
     browser = await puppeteer.launch({
       headless: "new",
+
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--no-first-run", "--no-zygote", "--single-process"],
     });
 
     const page = await browser.newPage();
-
-    console.log("📐 Set viewport...");
 
     if (type === "sticker") {
       await page.setViewport({
@@ -30,9 +27,7 @@ async function generateWATemplate(text, type = "quote") {
       });
     }
 
-    /* ======================
-   PILIH TEMPLATE
-====================== */
+    /* pilih template */
 
     let templateFolder;
 
@@ -44,15 +39,11 @@ async function generateWATemplate(text, type = "quote") {
 
     const filePath = "file://" + path.join(__dirname, `../template/${templateFolder}/index.html`);
 
-    console.log("📂 Load template:", templateFolder);
-
-    const url = filePath + "?text=" + encodeURIComponent(text) + "&mode=" + type;
+    const url = filePath + "?text=" + encodeURIComponent(text) + "&time=" + encodeURIComponent(time);
 
     await page.goto(url, {
       waitUntil: "networkidle0",
     });
-
-    /* tunggu font */
 
     await page.evaluate(async () => {
       if (document.fonts) {
@@ -60,11 +51,7 @@ async function generateWATemplate(text, type = "quote") {
       }
     });
 
-    /* tunggu emoji */
-
-    await new Promise((resolve) => setTimeout(resolve, 300));
-
-    console.log("📸 Screenshot...");
+    await new Promise((r) => setTimeout(r, 300));
 
     const buffer = await page.screenshot({
       type: "png",
@@ -73,12 +60,8 @@ async function generateWATemplate(text, type = "quote") {
 
     await browser.close();
 
-    console.log("✅ Template selesai dirender");
-
     return buffer;
   } catch (err) {
-    console.error("❌ Render Error:", err);
-
     if (browser) await browser.close();
 
     throw err;

@@ -2,18 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
-  font-family:
-    "Noto Color Emoji",
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -24,13 +13,12 @@ body {
   position: relative;
 }
 
-/* WALLPAPER */
+/* wallpaper */
 
 body::before {
   content: "";
 
   position: absolute;
-
   top: 0;
   left: 0;
 
@@ -46,7 +34,7 @@ body::before {
   z-index: -2;
 }
 
-/* OVERLAY */
+/* overlay */
 
 body::after {
   content: "";
@@ -64,7 +52,7 @@ body::after {
   z-index: -1;
 }
 
-/* SCREEN */
+/* screen */
 
 .wa-screen {
   width: 100%;
@@ -74,7 +62,7 @@ body::after {
   padding-left: 40px;
 }
 
-/* REACTION */
+/* reaction bar */
 
 .reaction-bar {
   display: inline-flex;
@@ -84,22 +72,22 @@ body::after {
 
   background: #2a2f33;
 
-  padding: 7px 16px;
+  padding: 8px 16px;
 
-  border-radius: 22px;
+  border-radius: 24px;
 
-  font-size: 24px;
+  font-size: 26px;
 
   margin-bottom: 10px;
 
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-
-  transform: translateY(6px);
 }
 
+/* plus */
+
 .plus {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
 
   display: flex;
   align-items: center;
@@ -110,23 +98,25 @@ body::after {
   border-radius: 50%;
 
   font-size: 18px;
+
+  margin-left: 4px;
 }
 
-/* CHAT */
+/* chat */
 
 .chat-row {
   display: flex;
   align-items: flex-end;
 }
 
-/* BUBBLE */
+/* bubble */
 
 .bubble {
   background: #202c33;
 
   color: white;
 
-  padding: 11px 15px 22px 15px;
+  padding: 12px 14px 22px 14px;
 
   border-radius: 14px;
 
@@ -134,7 +124,7 @@ body::after {
 
   font-size: 17px;
 
-  line-height: 1.42;
+  line-height: 1.45;
 
   position: relative;
 
@@ -143,7 +133,7 @@ body::after {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-/* BUBBLE TAIL */
+/* bubble tail */
 
 .bubble::after {
   content: "";
@@ -163,26 +153,34 @@ body::after {
   border-bottom-left-radius: 2px;
 }
 
-/* MESSAGE */
+/* message */
 
 #message {
   display: block;
+  padding-right: 45px;
 }
 
-/* TIME (WA STYLE) */
+/* meta */
 
-.time {
+.meta {
   position: absolute;
 
   right: 10px;
   bottom: 6px;
 
+  display: flex;
+  align-items: center;
+}
+
+/* time */
+
+#time {
   font-size: 11px;
 
   color: #8696a0;
 }
 
-/* MENU */
+/* menu */
 
 .menu {
   margin-top: 28px;
@@ -198,7 +196,7 @@ body::after {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
 }
 
-/* MENU ITEM */
+/* menu item */
 
 .menu-item {
   display: flex;
@@ -213,6 +211,8 @@ body::after {
   font-size: 15px;
 }
 
+/* icon */
+
 .menu-item img {
   width: 22px;
   height: 22px;
@@ -220,7 +220,7 @@ body::after {
   filter: brightness(0) invert(1);
 }
 
-/* DELETE */
+/* delete */
 
 .menu-item.delete img {
   filter: invert(37%) sepia(95%) saturate(6766%) hue-rotate(350deg) brightness(97%) contrast(120%);
