@@ -6,13 +6,13 @@ const { addMetadata } = require("./addMetadata");
 const { isEmoji, getEmojiImage } = require("./emojiCache");
 
 // Setup font
-const fontPath = path.join(__dirname, "../assets/fonts/impact.ttf");
+const fontPath = path.join(__dirname, "../assets/fonts/Arial.ttf");
 let fontFamily = "sans-serif";
 
 if (fs.existsSync(fontPath)) {
   try {
-    registerFont(fontPath, { family: "impact" });
-    fontFamily = "impact";
+    registerFont(fontPath, { family: "Arial" });
+    fontFamily = "Arial";
   } catch (error) {}
 }
 
