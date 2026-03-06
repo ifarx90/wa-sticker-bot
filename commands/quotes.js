@@ -1,5 +1,5 @@
 const { downloadMediaMessage } = require("@whiskeysockets/baileys");
-const { generateQuoteOnImage } = require("../utils/quotegenerator");
+const { generateQuoteOnImage } = require("../utils/quoteGenerator");
 const { generateWATemplate } = require("../utils/waTemplateRenderer");
 const { imageToSticker } = require("../utils/imageToSticker");
 const { startLoading, stopLoading } = require("../utils/loadingReaction");
