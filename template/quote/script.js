@@ -1,7 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 
-// ambil parameter
-const text = params.get("text") || params.get("q");
+const text = params.get("text");
 
 const message = document.getElementById("message");
 
@@ -17,23 +16,22 @@ function renderEmoji(text) {
 }
 
 if (text) {
-  const decodedText = decodeURIComponent(text);
-  message.innerHTML = renderEmoji(decodedText);
+  message.innerHTML = renderEmoji(text);
 } else {
-  message.textContent = "(teks isi sendiri)";
+  message.innerText = "(teks isi sendiri)";
 }
 
 // ========================
-// TIME (style WhatsApp)
+// TIME
 // ========================
 
 const now = new Date();
 
-let h = now.getHours();      // tanpa 0 di depan
+let h = now.getHours();
 let m = now.getMinutes();
 
 if (m < 10) {
-  m = "0" + m;               // menit tetap 2 digit
+  m = "0" + m;
 }
 
-document.getElementById("time").textContent = h + ":" + m;
+document.getElementById("time").innerText = h + ":" + m;
