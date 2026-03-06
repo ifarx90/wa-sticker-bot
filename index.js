@@ -1,19 +1,34 @@
 const { connectWhatsApp, setMessageHandler } = require('./connection/whatsapp');
 const handleCommand = require('./handlers/commandHandler');
 
+const express = require("express");
+
 console.log('\nBOT STICKER AKTIF\n');
 
 let botSocket = null;
+
+/* =========================
+UPDATE SOCKET
+========================= */
 
 function updateSocket(newSocket) {
     botSocket = newSocket;
 }
 
+/* =========================
+MESSAGE HANDLER
+========================= */
+
 const onMessage = async ({ messages }) => {
     const message = messages[0];
     if (!botSocket) return;
+
     await handleCommand(botSocket, message);
 };
+
+/* =========================
+WHATSAPP BOT START
+========================= */
 
 async function startBot() {
     try {
@@ -24,18 +39,24 @@ async function startBot() {
     }
 }
 
-startBot();
+/* =========================
+WEB SERVER (ANTI SLEEP)
+========================= */
 
-const express = require("express")
-
-const app = express()
+const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Bot is running")
-})
+    res.send("Bot is running");
+});
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Web server running on port", PORT)
-})
+    console.log("🌐 Web server running on port", PORT);
+});
+
+/* =========================
+START BOT
+========================= */
+
+startBot();

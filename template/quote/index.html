@@ -2,40 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style.css" />
 
-    <!-- twemoji -->
-    <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script>
-    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="wa-screen">
-      <!-- REACTION BAR -->
+      <!-- reaction -->
+      <div class="reaction-bar">👍 ❤️ 😂 😮 😢 🙏 <span class="plus">+</span></div>
 
-      <div class="reaction-bar">
-        <span>👍</span>
-        <span>❤️</span>
-        <span>😂</span>
-        <span>😮</span>
-        <span>😢</span>
-        <span>🙏</span>
-
-        <div class="plus">+</div>
-      </div>
-
-      <!-- CHAT ROW -->
-
+      <!-- chat bubble -->
       <div class="chat-row">
         <div class="bubble">
           <span id="message"></span>
 
-          <span id="time" class="time"></span>
+          <div class="meta">
+            <span id="time"></span>
+          </div>
         </div>
       </div>
 
-      <!-- MENU -->
-
+      <!-- context menu -->
       <div class="menu">
         <div class="menu-item">
           <span>Beri Bintang</span>
@@ -68,6 +55,9 @@
         </div>
       </div>
     </div>
+
+    <!-- TWEMOJI -->
+    <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script>
 
     <script src="script.js"></script>
   </body>
