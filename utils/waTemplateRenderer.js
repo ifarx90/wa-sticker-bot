@@ -7,11 +7,14 @@ async function generateWATemplate(text, time, type = "quote") {
   try {
     browser = await puppeteer.launch({
       headless: "new",
-
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-gpu", "--no-first-run", "--no-zygote", "--single-process"],
     });
 
     const page = await browser.newPage();
+
+    /* =========================
+       VIEWPORT
+    ========================= */
 
     if (type === "sticker") {
       await page.setViewport({
@@ -27,7 +30,9 @@ async function generateWATemplate(text, time, type = "quote") {
       });
     }
 
-    /* pilih template */
+    /* =========================
+       PILIH TEMPLATE
+    ========================= */
 
     let templateFolder;
 
@@ -39,11 +44,38 @@ async function generateWATemplate(text, time, type = "quote") {
 
     const filePath = "file://" + path.join(__dirname, `../template/${templateFolder}/index.html`);
 
-    const url = filePath + "?text=" + encodeURIComponent(text) + "&time=" + encodeURIComponent(time);
+    /* =========================
+       FIX TIME
+    ========================= */
+
+    let safeTime = time;
+
+    if (!safeTime) {
+      const now = new Date();
+
+      const hour = now.getHours().toString().padStart(2, "0");
+      const minute = now.getMinutes().toString().padStart(2, "0");
+
+      safeTime = `${hour}:${minute}`;
+    }
+
+    /* =========================
+       URL PARAM
+    ========================= */
+
+    const url = filePath + "?text=" + encodeURIComponent(text || "") + "&time=" + encodeURIComponent(safeTime);
+
+    /* =========================
+       LOAD PAGE
+    ========================= */
 
     await page.goto(url, {
       waitUntil: "networkidle0",
     });
+
+    /* =========================
+       TUNGGU FONT
+    ========================= */
 
     await page.evaluate(async () => {
       if (document.fonts) {
@@ -51,7 +83,15 @@ async function generateWATemplate(text, time, type = "quote") {
       }
     });
 
+    /* =========================
+       TUNGGU EMOJI
+    ========================= */
+
     await new Promise((r) => setTimeout(r, 300));
+
+    /* =========================
+       SCREENSHOT
+    ========================= */
 
     const buffer = await page.screenshot({
       type: "png",

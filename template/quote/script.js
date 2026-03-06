@@ -1,38 +1,55 @@
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search)
 
-const text = params.get("text");
-const time = params.get("time");
+const textParam = params.get("text")
+const timeParam = params.get("time")
 
-const message = document.getElementById("message");
-const timeEl = document.getElementById("time");
+const message = document.getElementById("message")
+const timeEl = document.getElementById("time")
 
-/* render emoji hanya untuk teks */
+/* ======================
+TEXT
+====================== */
 
-function renderEmoji(str) {
-  if (typeof twemoji !== "undefined") {
-    return twemoji.parse(str, {
-      folder: "svg",
-      ext: ".svg",
-    });
+if (textParam) {
+
+  try {
+
+    const decoded = decodeURIComponent(textParam)
+
+    message.textContent = decoded
+
+  } catch {
+
+    message.textContent = textParam
+
   }
 
-  return str;
+} else {
+
+  message.textContent = ""
+
 }
 
-/* text */
+/* ======================
+TIME
+====================== */
 
-if (text) {
-  const decodedText = decodeURIComponent(text);
+if (timeParam) {
 
-  message.innerHTML = renderEmoji(decodedText);
+  try {
+
+    const decodedTime = decodeURIComponent(timeParam)
+
+    timeEl.textContent = decodedTime
+
+  } catch {
+
+    timeEl.textContent = timeParam
+
+  }
+
 } else {
-  message.innerText = "(no text)";
-}
 
-/* time */
+  timeEl.textContent = ""
 
-if (time) {
-  timeEl.innerText = decodeURIComponent(time);
-} else {
-  timeEl.innerText = "";
 }
