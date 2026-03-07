@@ -160,24 +160,23 @@ body::after {
 /* message */
 
 #message{
-display:inline;
-padding-right:6px;
-word-wrap:break-word;
+  display:block;
+  padding-right:42px;
+  line-height:1.35;
+  word-wrap:break-word;
 }
 
 /* meta */
 
 .meta{
-display:inline-flex;
-align-items:flex-end;
-margin-left:6px;
+  position:absolute;
+  right:10px;
+  bottom:6px;
 }
 
-/* time */
-
 #time{
-font-size:11px;
-color:rgba(255,255,255,0.65);
+  font-size:11px;
+  opacity:0.65;
 }
 
 /* menu */
