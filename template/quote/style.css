@@ -162,31 +162,32 @@ body::after {
 #message {
   display: block;
 
-  /* beri ruang untuk jam */
-  padding-right: 60px;
-  padding-bottom: 4px;
+  /* ruang untuk waktu seperti WhatsApp */
+  padding-right: 65px;
+  padding-bottom: 6px;
+
+  word-wrap: break-word;
 }
 
 /* meta */
 
-.meta{
+.meta {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
 
-position:absolute;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 
-right:10px;
-bottom:6px;
-
-pointer-events:none;
-
+  pointer-events: none;
 }
 
 /* time */
 
 #time{
-
 font-size:11px;
-color:rgba(255,255,255,0.6);
-
+color:rgba(255,255,255,0.65);
 }
 
 /* menu */

@@ -6,7 +6,9 @@ const time = params.get("time");
 const message = document.getElementById("message");
 const timeEl = document.getElementById("time");
 
-/* message */
+/* =========================
+   MESSAGE
+========================= */
 
 if (text) {
   message.innerText = decodeURIComponent(text);
@@ -14,18 +16,40 @@ if (text) {
   message.innerText = "";
 }
 
-/* time */
+/* =========================
+   TIME
+========================= */
 
-if (time) {
-  const decoded = decodeURIComponent(time);
+function getCurrentTime() {
+  const now = new Date();
 
-  /* hanya tampilkan jika format HH:MM */
+  const hour = now.getHours().toString().padStart(2, "0");
+  const minute = now.getMinutes().toString().padStart(2, "0");
 
-  if (/^\d{1,2}:\d{2}$/.test(decoded)) {
-    timeEl.innerText = decoded;
-  } else {
-    timeEl.innerText = "";
-  }
-} else {
-  timeEl.innerText = "";
+  return `${hour}:${minute}`;
 }
+
+/* set waktu awal */
+
+function setTime() {
+  if (time) {
+    const decoded = decodeURIComponent(time);
+
+    if (decoded.trim() !== "") {
+      timeEl.innerText = decoded;
+      return;
+    }
+  }
+
+  timeEl.innerText = getCurrentTime();
+}
+
+setTime();
+
+/* update tiap 1 menit supaya realistis */
+
+setInterval(() => {
+  if (!time || decodeURIComponent(time).trim() === "") {
+    timeEl.innerText = getCurrentTime();
+  }
+}, 60000);
