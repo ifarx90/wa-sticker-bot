@@ -161,26 +161,31 @@ body::after {
 
 #message {
   display: block;
-  padding-right: 45px;
+
+  /* beri ruang untuk jam */
+  padding-right: 60px;
+  padding-bottom: 4px;
 }
 
 /* meta */
 
-.meta {
-  position: absolute;
+.meta{
 
-  right: 10px;
-  bottom: 4px;
+position:absolute;
 
-  opacity: 0.7;
+right:10px;
+bottom:6px;
+
+pointer-events:none;
+
 }
 
 /* time */
 
 #time{
 
-font-size:12px;
-color:#9aa0a6;
+font-size:11px;
+color:rgba(255,255,255,0.6);
 
 }
 
