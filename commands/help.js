@@ -34,12 +34,12 @@ async function execute(sock, message, args) {
 
 ifaR🤖bot • by Rafii`;
 
-    await sock.sendMessage(from, { text: helpText });
+    await sock.sendMessage(from, { text: helpText }, { quoted: message });
     console.log(`✅ .menu untuk ${message.pushName || from.split("@")[0]}`);
   } catch (error) {
     console.log("❌ Error di .help:", error.message);
     const from = message.key.remoteJid;
-    await sock.sendMessage(from, { text: "❌ Gagal menampilkan bantuan" });
+    await sock.sendMessage(from, { text: "❌ Gagal menampilkan bantuan" }, { quoted: message });
   }
 }
 

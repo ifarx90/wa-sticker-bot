@@ -32,7 +32,7 @@ async function execute(sock, message, args) {
         if (quoted) {
             // Skenario reply
             if (!quoted.imageMessage) {
-                await sock.sendMessage(from, { text: '⚠️ Itu bukan gambar! Reply gambar ya.' });
+                await sock.sendMessage(from, { text: '⚠️ Itu bukan gambar! Reply gambar ya.' }, { quoted: message });
                 return;
             }
             console.log('📥 Mendownload gambar dari reply...');
@@ -59,7 +59,7 @@ async function execute(sock, message, args) {
         if (fileSize > MAX_FILE_SIZE) {
             await sock.sendMessage(from, { 
                 text: "❌ Ukuran gambar terlalu besar (max 7MB)"
-            });
+            }, { quoted: message });
             return;
         }
         
@@ -75,7 +75,7 @@ async function execute(sock, message, args) {
         if (!notifiedUsers.has(from)) {
             await sock.sendMessage(from, { 
                 text: '📸 Catatan: Gambar asli akan tersimpan di galeri. Disarankan matikan auto download biar ga double.' 
-            });
+            }, { quoted: message });
             notifiedUsers.add(from);
             storage.saveNotified(notifiedUsers);
         }
@@ -125,7 +125,7 @@ async function execute(sock, message, args) {
         // Kirim stiker
         await sock.sendMessage(from, { 
             sticker: stickerBuffer
-        });
+        }, { quoted: message });
         
         // ===== HAPUS REACTION =====
         await sock.sendMessage(from, {

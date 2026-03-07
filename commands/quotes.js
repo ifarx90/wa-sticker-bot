@@ -23,7 +23,7 @@ async function execute(sock, message, args) {
 
       await sock.sendMessage(from, {
         text: "❌ *Kirim teksnya juga untuk dijadikan quotes.*\n\n.q (reply gambar) Jangan menyerah",
-      });
+      }, { quoted: message });
       return;
     }
 
@@ -53,7 +53,7 @@ async function execute(sock, message, args) {
 
       const stickerBuffer = await imageToSticker(quoteImage);
 
-      await sock.sendMessage(from, { sticker: stickerBuffer });
+      await sock.sendMessage(from, { sticker: stickerBuffer }, { quoted: message });
 
       console.log("✅ Quote sticker terkirim!");
 
@@ -73,7 +73,7 @@ async function execute(sock, message, args) {
       await sock.sendMessage(from, {
         image: templateImage,
         mimetype: "image/png"
-      });
+      }, { quoted: message });
 
       console.log("✅ Template sticker terkirim!");
 
@@ -86,7 +86,7 @@ async function execute(sock, message, args) {
 
     await sock.sendMessage(from, {
       text: "❌ Format salah. Gunakan:\n.q [teks] - template WA\n.q [teks] (reply gambar) - quote di gambar",
-    });
+    }, { quoted: message });
 
   } catch (error) {
 
@@ -96,7 +96,7 @@ async function execute(sock, message, args) {
 
     await sock.sendMessage(message.key.remoteJid, {
       text: "❌ Gagal: " + error.message,
-    });
+    }, { quoted: message });
   }
 }
 

@@ -7,7 +7,7 @@ async function execute(sock, message, args) {
     if (args.length === 0) {
       await sock.sendMessage(from, {
         text: "⚠️ teksnya mana kocak?\n" + "Contoh penggunaan:\n" + "• .kal Rafi Ganteng\n" + "• .kal halo😀 (tanpa spasi, 1 baris)\n" + "• .kal halo 😀 (pakai spasi, 2 baris)\n\n" + "💡 Tips: Spasi akan memisahkan baris",
-      });
+      }, { quoted: message });
       return;
     }
 
@@ -26,7 +26,7 @@ async function execute(sock, message, args) {
     // KIRIM STIKER
     await sock.sendMessage(from, {
       sticker: stickerBuffer,
-    });
+    }, { quoted: message });
 
     console.log("✅ Stiker terkirim");
   } catch (error) {
@@ -35,7 +35,7 @@ async function execute(sock, message, args) {
     const from = message.key.remoteJid;
     await sock.sendMessage(from, {
       text: "❌ Gagal bikin stiker",
-    });
+    }, { quoted: message });
   }
 }
 

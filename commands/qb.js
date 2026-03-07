@@ -22,24 +22,20 @@ async function execute(sock, message, args) {
     console.log("📱 Generate WA template (sticker)...");
 
     const templateImage = await generateWATemplate(text, "sticker");
-
     const stickerBuffer = await imageToSticker(templateImage);
 
-    await sock.sendMessage(from, { sticker: stickerBuffer });
-
+    await sock.sendMessage(from, { sticker: stickerBuffer }, { quoted: message }); 
     console.log("✅ Sticker QB terkirim!");
 
     await stopLoading(sock, message);
-
   } catch (err) {
-
     await stopLoading(sock, message);
 
     console.log("❌ Error QB:", err);
 
     await sock.sendMessage(from, {
-      text: "❌ Waduh error pas bikin quote sticker bang"
-    });
+      text: "❌ Waduh error pas bikin quote sticker bang",
+    },{ quoted: message });
   }
 }
 

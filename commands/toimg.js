@@ -17,7 +17,7 @@ async function execute(sock, message, args) {
 
             await sock.sendMessage(from, { 
                 text: '❌ *Reply stiker dulu bang!*\n\nContoh: reply stiker + .toimg' 
-            });
+            }, { quoted: message });
             return;
         }
 
@@ -49,7 +49,7 @@ async function execute(sock, message, args) {
         await sock.sendMessage(from, {
             image: imageBuffer,
             caption: '🖼️ *Hasil convert stiker ke gambar*'
-        });
+        }, { quoted: message });
 
         console.log('✅ Gambar terkirim!');
 
@@ -63,7 +63,7 @@ async function execute(sock, message, args) {
 
         await sock.sendMessage(from, { 
             text: '❌ Gagal convert stiker. Mungkin format tidak didukung.' 
-        });
+        }, { quoted: message });
     }
 }
 

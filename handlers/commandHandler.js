@@ -78,8 +78,10 @@ async function handleCommand(sock, message) {
       welcomedUsers.add(from);
       storage.saveWelcomed(welcomedUsers);
 
-      await sock.sendMessage(from, {
-        text: `╔════════════════════╗
+      await sock.sendMessage(
+        from,
+        {
+          text: `╔════════════════════╗
 ║   👋 SELAMAT DATANG  ║
 ╚════════════════════╝
 
@@ -96,7 +98,9 @@ async function handleCommand(sock, message) {
 
 ━━━━━━━━━━━━━━━━
 ifaR🤖bot  •  by: Rafii`,
-      });
+        },
+        { quoted: message },
+      );
 
       console.log(`👋 Sambutan untuk user baru: ${from}`);
       return;
@@ -104,15 +108,19 @@ ifaR🤖bot  •  by: Rafii`,
 
     // ===== BUKAN COMMAND =====
     if (!isCommand) {
-      await sock.sendMessage(from, {
-        text: `❌ Pesan tidak dikenali
+      await sock.sendMessage(
+        from,
+        {
+          text: `❌ Pesan tidak dikenali
 
 Gunakan .menu untuk melihat daftar perintah.
 
 Contoh:
 .kal jangan lupa bahagia brok
 .s (reply foto)`,
-      });
+        },
+        { quoted: message },
+      );
 
       console.log(`📢 Pemberitahuan untuk user: ${from} (${messageType})`);
       return;
@@ -131,7 +139,7 @@ Contoh yang bener:
 .s (reply gambar)
 
 Ketik .menu untuk bantuan lengkap.`,
-      });
+      }, { quoted: message });
 
       console.log(`❌ Command salah: ada spasi setelah prefix dari ${from}`);
       return;
@@ -145,10 +153,8 @@ Ketik .menu untuk bantuan lengkap.`,
     if (!commandName) {
       await sock.sendMessage(from, {
         text: `❌ Cuma titik doang?
-
 ketik .menu untuk lihat daftar perintah yang tersedia.`,
-      });
-
+      }, { quoted: message });
       console.log(`❌ Command kosong dari ${from}`);
       return;
     }
@@ -161,7 +167,7 @@ ketik .menu untuk lihat daftar perintah yang tersedia.`,
         text: `❌ Command "${commandName}" tidak dikenal
 
 Ketik .menu untuk melihat daftar perintah yang tersedia.`,
-      });
+      }, { quoted: message });
 
       console.log(`❌ Command "${commandName}" tidak dikenal dari ${from}`);
       return;

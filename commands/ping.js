@@ -7,7 +7,7 @@ async function execute(sock, message, args) {
     // Kirim balasan
     await sock.sendMessage(from, {
       text: "🤖 ifarXbot sedang aktif!\nAdaa yang bisa dibantu?",
-    });
+    }, { quoted: message });
 
     console.log("✅ Ping berhasil dijawab");
   } catch (error) {
