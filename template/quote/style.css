@@ -159,28 +159,18 @@ body::after {
 
 /* message */
 
-#message {
-  display: block;
-
-  /* ruang untuk waktu seperti WhatsApp */
-  padding-right: 65px;
-  padding-bottom: 6px;
-
-  word-wrap: break-word;
+#message{
+display:inline;
+padding-right:6px;
+word-wrap:break-word;
 }
 
 /* meta */
 
-.meta {
-  position: absolute;
-  right: 8px;
-  bottom: 4px;
-
-  display: flex;
-  align-items: center;
-  gap: 3px;
-
-  pointer-events: none;
+.meta{
+display:inline-flex;
+align-items:flex-end;
+margin-left:6px;
 }
 
 /* time */
