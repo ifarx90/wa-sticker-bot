@@ -1,55 +1,31 @@
-const params = new URLSearchParams(window.location.search)
+const params = new URLSearchParams(window.location.search);
 
-const textParam = params.get("text")
-const timeParam = params.get("time")
+const text = params.get("text");
+const time = params.get("time");
 
-const message = document.getElementById("message")
-const timeEl = document.getElementById("time")
+const message = document.getElementById("message");
+const timeEl = document.getElementById("time");
 
-/* ======================
-TEXT
-====================== */
+/* message */
 
-if (textParam) {
-
-  try {
-
-    const decoded = decodeURIComponent(textParam)
-
-    message.textContent = decoded
-
-  } catch {
-
-    message.textContent = textParam
-
-  }
-
+if (text) {
+  message.innerText = decodeURIComponent(text);
 } else {
-
-  message.textContent = ""
-
+  message.innerText = "";
 }
 
-/* ======================
-TIME
-====================== */
+/* time */
 
-if (timeParam) {
+if (time) {
+  const decoded = decodeURIComponent(time);
 
-  try {
+  /* hanya tampilkan jika format HH:MM */
 
-    const decodedTime = decodeURIComponent(timeParam)
-
-    timeEl.textContent = decodedTime
-
-  } catch {
-
-    timeEl.textContent = timeParam
-
+  if (/^\d{1,2}:\d{2}$/.test(decoded)) {
+    timeEl.innerText = decoded;
+  } else {
+    timeEl.innerText = "";
   }
-
 } else {
-
-  timeEl.textContent = ""
-
+  timeEl.innerText = "";
 }
