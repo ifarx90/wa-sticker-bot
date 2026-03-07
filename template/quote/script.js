@@ -1,7 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 
 const text = params.get("text");
-const time = params.get("time");
 
 const message = document.getElementById("message");
 const timeEl = document.getElementById("time");
@@ -17,7 +16,7 @@ if (text) {
 }
 
 /* =========================
-   TIME
+   TIME (AUTO)
 ========================= */
 
 function getCurrentTime() {
@@ -29,27 +28,12 @@ function getCurrentTime() {
   return `${hour}:${minute}`;
 }
 
-/* set waktu awal */
+/* set waktu pertama */
 
-function setTime() {
-  if (time) {
-    const decoded = decodeURIComponent(time);
+timeEl.innerText = getCurrentTime();
 
-    if (decoded.trim() !== "") {
-      timeEl.innerText = decoded;
-      return;
-    }
-  }
-
-  timeEl.innerText = getCurrentTime();
-}
-
-setTime();
-
-/* update tiap 1 menit supaya realistis */
+/* update setiap menit */
 
 setInterval(() => {
-  if (!time || decodeURIComponent(time).trim() === "") {
-    timeEl.innerText = getCurrentTime();
-  }
+  timeEl.innerText = getCurrentTime();
 }, 60000);
