@@ -30,7 +30,7 @@ commands.set(qb.name, qb);
 
 async function handleCommand(sock, message) {
   try {
-    if (!message.message) return;
+    if (!message.message || message.key.fromMe) return;
 
     const from = message.key.remoteJid;
 
@@ -130,10 +130,8 @@ Contoh:
     const fullText = text.slice(config.prefix.length);
 
     if (fullText.startsWith(" ")) {
-      await sock.sendMessage(
-        from,
-        {
-          text: `❌ Jangan pake spasi setelah titik!
+      await sock.sendMessage(from, {
+        text: `❌ Jangan pake spasi setelah titik!
 
 Contoh yang bener:
 .ping
@@ -141,9 +139,7 @@ Contoh yang bener:
 .s (reply gambar)
 
 Ketik .menu untuk bantuan lengkap.`,
-        },
-        { quoted: message },
-      );
+      }, { quoted: message });
 
       console.log(`❌ Command salah: ada spasi setelah prefix dari ${from}`);
       return;
@@ -155,14 +151,10 @@ Ketik .menu untuk bantuan lengkap.`,
 
     // ===== CEK TITIK DOANG =====
     if (!commandName) {
-      await sock.sendMessage(
-        from,
-        {
-          text: `❌ Cuma titik doang?
+      await sock.sendMessage(from, {
+        text: `❌ Cuma titik doang?
 ketik .menu untuk lihat daftar perintah yang tersedia.`,
-        },
-        { quoted: message },
-      );
+      }, { quoted: message });
       console.log(`❌ Command kosong dari ${from}`);
       return;
     }
@@ -171,15 +163,11 @@ ketik .menu untuk lihat daftar perintah yang tersedia.`,
     const command = commands.get(commandName);
 
     if (!command) {
-      await sock.sendMessage(
-        from,
-        {
-          text: `❌ Command "${commandName}" tidak dikenal
+      await sock.sendMessage(from, {
+        text: `❌ Command "${commandName}" tidak dikenal
 
 Ketik .menu untuk melihat daftar perintah yang tersedia.`,
-        },
-        { quoted: message },
-      );
+      }, { quoted: message });
 
       console.log(`❌ Command "${commandName}" tidak dikenal dari ${from}`);
       return;
