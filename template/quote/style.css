@@ -86,8 +86,7 @@ body::after {
 .emoji {
   display: inline-block;
 
-  /* FIX EMOJI FONT */
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Twemoji Mozilla", sans-serif;
 }
 
 /* plus */
@@ -171,14 +170,18 @@ body::after {
   position: absolute;
 
   right: 10px;
-  bottom: 6px;
+  bottom: 4px;
+
+  opacity: 0.7;
 }
 
 /* time */
 
-#time {
-  font-size: 11px;
-  color: #9aa0a6;
+#time{
+
+font-size:12px;
+color:#9aa0a6;
+
 }
 
 /* menu */
