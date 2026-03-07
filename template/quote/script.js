@@ -16,24 +16,24 @@ if (text) {
 }
 
 /* =========================
-   TIME (AUTO)
+   TIME REALTIME
 ========================= */
 
-function getCurrentTime() {
+function updateTime() {
   const now = new Date();
 
-  const hour = now.getHours().toString().padStart(2, "0");
-  const minute = now.getMinutes().toString().padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
 
-  return `${hour}:${minute}`;
+  const timeString = `${hour}:${minute}`;
+
+  if (timeEl) {
+    timeEl.textContent = timeString;
+  }
 }
 
-/* set waktu pertama */
+/* jalankan langsung saat halaman load */
+updateTime();
 
-timeEl.innerText = getCurrentTime();
-
-/* update setiap menit */
-
-setInterval(() => {
-  timeEl.innerText = getCurrentTime();
-}, 60000);
+/* update setiap detik */
+setInterval(updateTime, 1000);
