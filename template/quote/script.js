@@ -16,16 +16,18 @@ if (text) {
 }
 
 /* =========================
-   TIME REALTIME
+   TIME REALTIME (WIB)
 ========================= */
 
 function updateTime() {
   const now = new Date();
 
-  const hour = String(now.getHours()).padStart(2, "0");
-  const minute = String(now.getMinutes()).padStart(2, "0");
-
-  const timeString = `${hour}:${minute}`;
+  const timeString = now.toLocaleTimeString("id-ID", {
+    timeZone: "Asia/Jakarta",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
   if (timeEl) {
     timeEl.textContent = timeString;
